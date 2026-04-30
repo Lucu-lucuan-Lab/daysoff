@@ -20,9 +20,22 @@ const jetBrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Kalender Cuti Indonesia",
+  title: "Days Off",
   description:
     "Planner cuti strategis untuk menemukan libur kejepit, cuti bersama, dan peluang long weekend di Indonesia.",
+  openGraph: {
+    title: "Kalender Cuti Indonesia",
+    description: "Cari libur panjang tanpa nebak-nebak.",
+    url: "https://daysoff.l2lab.dev",
+    siteName: "DaysOff",
+    locale: "id_ID",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Kalender Cuti Indonesia",
+    description: "Cari libur panjang tanpa nebak-nebak.",
+  },
 };
 
 export default function RootLayout({

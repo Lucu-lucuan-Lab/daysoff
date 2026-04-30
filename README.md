@@ -1,36 +1,50 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Kalender Cuti Indonesia (daysoff)
 
-## Getting Started
+A Next.js web application designed to optimize annual leave planning for Indonesian workers. It calculates the most efficient use of PTO (Paid Time Off) by identifying bridge days (hari kejepit) and long weekends around national holidays and collective leave (cuti bersama).
 
-First, run the development server:
+## How It Works
+
+The core of the application is a recommendation engine (`src/lib/recommendations.ts`) that:
+1. Ingests official holiday data via `libur.deno.dev` (with local fallbacks up to 2026).
+2. Scans for "opportunities" (windows of time where taking 1-5 days of leave yields disproportionately long continuous breaks).
+3. Uses a dynamic programming approach to pack the highest-value opportunities into a user-defined annual leave budget without overlapping dates.
+
+## Tech Stack
+
+- **Framework**: Next.js 16 (App Router)
+- **UI**: React 19, Tailwind CSS 4, Radix UI Primitives, Lucide
+- **Date Math**: `date-fns`
+- **Testing**: Node.js native test runner (`node --test`)
+
+## Local Development
+
+Requires Node.js 20+.
 
 ```bash
+# Clone and install
+git clone https://github.com/your-org/daysoff.git
+cd daysoff
+npm install
+
+# Start the dev server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# Run unit tests
+npm test
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Project Structure
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `/src/app` - Next.js App Router (pages and layouts).
+- `/src/app/_components` - Domain-specific UI components (e.g., calendar grids, plan cards).
+- `/src/lib` - Core business logic and data fetching hooks. We keep this pure and framework-agnostic where possible.
+- `/src/data` - Static JSON/TS fallbacks for holiday data (2024-2026).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Contributing
 
-## Learn More
+We welcome pull requests. When contributing:
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Keep it focused**: One PR, one scope.
+- **Commit messages**: Use imperative mood (e.g., `fix: handle leap year calculation`, `feat: add 2027 holiday data`). Follow the existing commit style of the repository (`git log -n 5`).
+- **Code style**: Do not add inline or block comments. The code should explain itself through variable naming, module structure, and clear types.
+- **Testing**: If you touch `src/lib/recommendations.ts` or date math, add a corresponding test in `src/lib/*.test.ts`.

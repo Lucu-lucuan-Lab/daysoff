@@ -1,4 +1,4 @@
-import { Holiday, holidays as fallbackHolidays } from "@/data/holidays";
+import { holidays as fallbackHolidays, type Holiday } from "../data/holidays.ts";
 
 export type HolidaySource = "api" | "local" | "mixed";
 

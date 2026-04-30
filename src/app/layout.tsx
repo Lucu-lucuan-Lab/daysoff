@@ -1,20 +1,20 @@
 import type { Metadata } from "next";
-import { Fraunces, Geist_Mono, IBM_Plex_Sans } from "next/font/google";
+import { JetBrains_Mono, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 
-const ibmPlexSans = IBM_Plex_Sans({
+const plusJakartaSans = Plus_Jakarta_Sans({
   variable: "--font-body",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700", "800"],
 });
 
-const fraunces = Fraunces({
+const plusJakartaDisplay = Plus_Jakarta_Sans({
   variable: "--font-display",
   subsets: ["latin"],
-  weight: ["700", "800", "900"],
+  weight: ["700", "800"],
 });
 
-const geistMono = Geist_Mono({
+const jetBrainsMono = JetBrains_Mono({
   variable: "--font-code",
   subsets: ["latin"],
 });
@@ -33,7 +33,7 @@ export default function RootLayout({
   return (
     <html
       lang="id"
-      className={`${ibmPlexSans.variable} ${fraunces.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${plusJakartaSans.variable} ${plusJakartaDisplay.variable} ${jetBrainsMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>

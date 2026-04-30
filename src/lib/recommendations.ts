@@ -198,7 +198,7 @@ function createRecommendation({
     startDate,
     endDate,
     title: getRecommendationTitle(type, totalDaysOff),
-    reason: `Ambil ${leaveDaysSpent} hari cuti (${dateList}) untuk membuka libur ${range}.`,
+    reason: `Ambil ${leaveDaysSpent} hari cuti (${dateList}) untuk libur panjang ${range}.`,
     benefit: `Ambil ${leaveDaysSpent} hari cuti untuk mendapatkan ${totalDaysOff} hari libur beruntun.`,
     leaveDaysSpent,
     totalDaysOff,
@@ -275,11 +275,11 @@ function buildAnnualPlan(
 
   return {
     type: "annual_plan",
-    title: "Paket cuti tahunan terbaik",
+    title: "Rencana cuti tahunan terbaik",
     reason:
       selected.length > 0
-        ? `Memakai ${leaveDaysSpent} dari ${budget} jatah cuti untuk membuka ${totalDaysOff} hari libur beruntun dari ${selected.length} peluang tanpa overlap.`
-        : "Tidak ada paket cuti yang cocok dengan budget ini.",
+        ? `Pakai ${leaveDaysSpent} dari ${budget} jatah cuti untuk mendapat ${totalDaysOff} hari libur beruntun dari ${selected.length} peluang tanpa bentrok.`
+        : "Belum ada rencana yang cocok dengan jatah cuti ini.",
     dates,
     recommendations: selected,
     leaveDaysSpent,
@@ -347,11 +347,11 @@ function getRecommendationType(
 
 function getRecommendationTitle(type: RecommendationType, totalDaysOff: number) {
   if (type === "mega_break") {
-    return `Mega break ${totalDaysOff} hari`;
+    return `Libur besar ${totalDaysOff} hari`;
   }
 
   if (type === "long_weekend") {
-    return `Long weekend ${totalDaysOff} hari`;
+    return `Akhir pekan panjang ${totalDaysOff} hari`;
   }
 
   return `Hari kejepit ${totalDaysOff} hari`;

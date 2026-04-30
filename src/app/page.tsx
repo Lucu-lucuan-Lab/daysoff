@@ -141,11 +141,11 @@ export default function Home() {
             </div>
             <div className="max-w-3xl">
               <h1 className="font-heading text-[clamp(3rem,5.8vw,5.9rem)] font-black leading-[0.9] tracking-normal">
-                Rancang libur panjang tanpa nebak-nebak.
+                Cari libur panjang tanpa nebak-nebak.
               </h1>
               <p className="mt-5 max-w-2xl text-base font-semibold leading-7 text-stone-700 sm:text-lg">
-                Pilih tahun kerja, lihat hari libur nasional, cuti bersama, dan tanggal cuti
-                paling strategis dalam satu peta tahun yang bisa dipindai cepat.
+                Pilih tahun, lihat libur nasional, cuti bersama, akhir pekan, dan
+                tanggal cuti paling menguntungkan dalam satu peta.
               </p>
             </div>
           </div>
@@ -165,7 +165,7 @@ export default function Home() {
             />
             <MetricCard
               icon={<PlaneTakeoff className="size-5" />}
-              label="Cuti disarankan"
+              label="Tanggal cuti"
               value={recommendedLeaveDays.length}
               tone="green"
             />
@@ -235,8 +235,8 @@ export default function Home() {
               </div>
               <p className="mt-3 text-sm leading-6 text-stone-600">
                 {isSixDayWorkWeek
-                  ? "Sabtu dihitung hari kerja. Rekomendasi cuti lebih ketat dan fokus pada Minggu serta libur resmi."
-                  : "Sabtu dan Minggu dihitung libur. Cocok untuk kantor dengan jadwal kerja Senin sampai Jumat."}
+                  ? "Sabtu dihitung hari kerja. Rekomendasi fokus ke Minggu, libur nasional, dan cuti bersama."
+                  : "Sabtu dan Minggu dihitung libur. Pas untuk jadwal kerja Senin sampai Jumat."}
               </p>
             </div>
 
@@ -268,8 +268,8 @@ export default function Home() {
                 </div>
               </div>
               <p className="mt-3 text-sm font-semibold leading-6 text-stone-700">
-                Engine memilih paket tanpa overlap yang paling banyak membuka hari libur
-                beruntun.
+                Sistem memilih rencana tanpa bentrok yang memberi libur beruntun
+                paling panjang.
               </p>
             </div>
 
@@ -277,7 +277,7 @@ export default function Home() {
               <div className="flex items-center gap-2 text-amber-200">
                 <Sparkles className="size-5" />
                 <span className="text-xs font-black uppercase tracking-[0.16em]">
-                  Paket terbaik
+                  Rencana terbaik
                 </span>
               </div>
               {annualPlan.recommendations.length > 0 ? (
@@ -286,7 +286,7 @@ export default function Home() {
                     {annualPlan.totalDaysOff} hari
                   </p>
                   <p className="mt-1 text-sm font-semibold text-red-50">
-                    dari {annualPlan.leaveDaysSpent} hari cuti, tersebar di{" "}
+                    pakai {annualPlan.leaveDaysSpent} hari cuti dari{" "}
                     {annualPlan.recommendations.length} peluang.
                   </p>
                   <p className="mt-4 inline-flex items-center gap-2 bg-white px-3 py-2 text-sm font-black text-stone-950">
@@ -301,7 +301,7 @@ export default function Home() {
 
             <div className="border-2 border-stone-950 bg-[#e4f2ef] p-4 shadow-[8px_8px_0_#1c1917]">
               <div className="mb-3 flex items-center justify-between gap-3">
-                <h2 className="font-heading text-2xl font-black">Paket tahunan</h2>
+                <h2 className="font-heading text-2xl font-black">Rencana tahunan</h2>
                 {isLoadingHolidays ? (
                   <Loader2 className="size-5 animate-spin" />
                 ) : (
@@ -340,7 +340,7 @@ export default function Home() {
                   ))
                 ) : (
                   <p className="border-2 border-dashed border-stone-400 bg-white/60 p-3 text-sm font-semibold text-stone-600">
-                    Tidak ada paket yang cocok untuk budget cuti ini.
+                    Belum ada rencana yang cocok dengan jatah cuti ini.
                   </p>
                 )}
               </div>
@@ -354,13 +354,13 @@ export default function Home() {
                   Peta tahun {year}
                 </p>
                 <h2 className="font-heading text-3xl font-black sm:text-4xl">
-                  Semua peluang cuti dalam 12 bulan.
+                  Semua peluang libur dalam 12 bulan.
                 </h2>
               </div>
               <div className="flex flex-wrap gap-2 text-xs font-black w-full items-end justify-end-safe">
                 <LegendDot className="bg-red-600" label="Libur nasional" />
                 <LegendDot className="bg-sky-300" label="Cuti bersama" />
-                <LegendDot className="bg-emerald-500" label="Cuti rekomendasi" />
+                <LegendDot className="bg-emerald-500" label="Tanggal cuti" />
                 <LegendDot className="bg-stone-200" label="Akhir pekan" />
               </div>
             </div>
@@ -370,7 +370,7 @@ export default function Home() {
                 <div className="absolute inset-0 z-10 grid place-items-center bg-[#fbfaf5]/80 backdrop-blur-sm">
                   <div className="flex items-center gap-3 border-2 border-stone-950 bg-white px-4 py-3 font-black shadow-[5px_5px_0_#1c1917]">
                     <Loader2 className="size-5 animate-spin text-red-600" />
-                    Memuat kalender libur...
+                    Memuat hari libur...
                   </div>
                 </div>
               )}
@@ -451,7 +451,7 @@ export default function Home() {
             Sumber data: {getHolidaySourceLabel(holidaySource)}.
           </span>
           <span>
-            Diperbarui untuk tampilan planner strategis, bukan kalender arsip.
+            Dibuat untuk merencanakan cuti, bukan sebagai arsip kalender resmi.
           </span>
         </footer>
       </div>
@@ -507,18 +507,18 @@ function LegendDot({ className, label }: { className: string; label: string }) {
 
 function getRecommendationLabel(type: RecommendationType) {
   if (type === "mega_break") {
-    return "Mega break";
+    return "Libur besar";
   }
 
   if (type === "long_weekend") {
-    return "Long weekend";
+    return "Akhir pekan panjang";
   }
 
   if (type === "annual_plan") {
-    return "Paket";
+    return "Rencana";
   }
 
-  return "Kejepit";
+  return "Hari kejepit";
 }
 
 function getHolidaySourceLabel(source: HolidaySource) {
@@ -527,8 +527,8 @@ function getHolidaySourceLabel(source: HolidaySource) {
   }
 
   if (source === "mixed") {
-    return "libur.deno.dev + snapshot resmi lokal";
+    return "libur.deno.dev + data lokal";
   }
 
-  return "snapshot resmi lokal";
+  return "data lokal";
 }

@@ -1,12 +1,11 @@
 "use client";
 
+import Image from "next/image";
 import React, { useMemo, useState } from "react";
 import { eachDayOfInterval, endOfMonth, isSameDay, startOfMonth } from "date-fns";
 import {
   BriefcaseBusiness,
   CalendarDays,
-  ChevronLeft,
-  ChevronRight,
   Loader2,
   MapPinned,
   Minus,
@@ -14,7 +13,6 @@ import {
   Plus,
 } from "lucide-react";
 
-import { HolidaySource } from "@/lib/holidays";
 import {
   generateRecommendationResult,
 } from "@/lib/recommendations";
@@ -25,15 +23,12 @@ import { AnnualPlanList } from "./_components/annual-plan-list";
 import { BestPlanCard } from "./_components/best-plan-card";
 import { MonthCalendar } from "./_components/month-calendar";
 
-const YEARS = [2024, 2025, 2026];
-
 export default function Home() {
-  const [year, setYear] = useState(2026);
+  const [year, setYear] = useState(new Date().getFullYear());
   const [isSixDayWorkWeek, setIsSixDayWorkWeek] = useState(false);
   const [annualLeaveBudget, setAnnualLeaveBudget] = useState(12);
   const {
     holidays: yearHolidays,
-    source: holidaySource,
     isLoading: isLoadingHolidays,
   } = useYearHolidays(year);
 
@@ -82,16 +77,6 @@ export default function Home() {
   const totalCollectiveLeave = yearHolidays.length - totalPublicHolidays;
   const leaveEfficiency = annualPlan.efficiency;
 
-  const changeYear = (direction: -1 | 1) => {
-    const currentIndex = YEARS.indexOf(year);
-    const nextYear = YEARS[currentIndex + direction];
-
-    if (nextYear) {
-      setSelectedPlanIndex(null);
-      setYear(nextYear);
-    }
-  };
-
   const changeLeaveBudget = (amount: -1 | 1) => {
     setAnnualLeaveBudget((currentBudget) =>
       Math.min(30, Math.max(0, currentBudget + amount))
@@ -113,8 +98,8 @@ export default function Home() {
                 Cari libur panjang tanpa nebak-nebak.
               </h1>
               <p className="mt-5 max-w-2xl text-base font-semibold leading-7 text-slate-600 sm:text-lg">
-                Pilih tahun, lihat libur nasional, cuti bersama, akhir pekan, dan
-                tanggal cuti paling menguntungkan dalam satu peta.
+                Lihat libur nasional, cuti bersama, akhir pekan, dan
+                tanggal cuti paling menguntungkan tahun ini dalam satu peta.
               </p>
             </div>
           </div>
@@ -142,49 +127,7 @@ export default function Home() {
         </header>
 
         <section className="grid gap-5 xl:grid-cols-[330px_minmax(0,1fr)]">
-          <aside className="flex min-h-0 flex-col gap-4 pb-2">
-            <div className="border-2 border-brand-navy bg-brand-navy p-3 text-white shadow-[8px_8px_0_var(--color-brand-teal)]">
-              <div className="mb-3 flex items-center justify-between">
-                <span className="text-xs font-black uppercase tracking-[0.16em] text-brand-teal-light">
-                  Tahun
-                </span>
-                <div className="flex items-center gap-1">
-                  <button
-                    aria-label="Tahun sebelumnya"
-                    disabled={year === YEARS[0]}
-                    onClick={() => changeYear(-1)}
-                    className="grid size-8 place-items-center border border-white/25 text-white transition hover:bg-brand-teal hover:text-brand-navy-deep disabled:pointer-events-none disabled:opacity-30"
-                  >
-                    <ChevronLeft className="size-4" />
-                  </button>
-                  <button
-                    aria-label="Tahun berikutnya"
-                    disabled={year === YEARS[YEARS.length - 1]}
-                    onClick={() => changeYear(1)}
-                    className="grid size-8 place-items-center border border-white/25 text-white transition hover:bg-brand-teal hover:text-brand-navy-deep disabled:pointer-events-none disabled:opacity-30"
-                  >
-                    <ChevronRight className="size-4" />
-                  </button>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-3 gap-2">
-                {YEARS.map((availableYear) => (
-                  <button
-                    key={availableYear}
-                    onClick={() => { setSelectedPlanIndex(null); setYear(availableYear); }}
-                    className={cn(
-                      "h-11 border-2 text-sm font-black transition",
-                      year === availableYear
-                        ? "border-brand-teal bg-brand-teal text-brand-navy-deep shadow-[3px_3px_0_#fff]"
-                        : "border-white/20 bg-white/5 text-white hover:border-brand-teal hover:text-brand-teal"
-                    )}
-                  >
-                    {availableYear}
-                  </button>
-                ))}
-              </div>
-            </div>
+          <aside className="flex min-h-0 flex-col gap-4">
 
             <div className="border-2 border-brand-navy bg-white p-4 shadow-[8px_8px_0_var(--color-brand-navy)]">
               <div className="flex items-start justify-between gap-4">
@@ -255,7 +198,7 @@ export default function Home() {
             />
           </aside>
 
-          <section className="min-w-0 border-2 border-brand-navy bg-[#f7f9fc] p-3 shadow-[10px_10px_0_var(--color-brand-navy)] sm:p-4">
+          <section className="min-w-0 border-2 border-brand-navy bg-[#f7f9fc] p-3 shadow-[8px_8px_0_var(--color-brand-navy)] sm:p-4">
             <div className="mb-4 flex flex-col gap-3 border-b-2 border-brand-navy pb-4 lg:flex-row lg:items-center lg:justify-between">
               <div className="mt-1 mb-6">
                 <p className="text-xs font-black uppercase tracking-[0.18em] text-slate-500">
@@ -301,13 +244,27 @@ export default function Home() {
           </section>
         </section>
 
-        <footer className="flex flex-col gap-2 border-t-2 border-brand-navy py-4 text-xs font-bold text-slate-500 sm:flex-row sm:items-center sm:justify-between">
-          <span>
-            Sumber data: {getHolidaySourceLabel(holidaySource)}.
-          </span>
-          <span>
-            Dibuat untuk merencanakan cuti, bukan sebagai arsip kalender resmi.
-          </span>
+        <footer className="mt-6 mb-8 relative">
+          <div className="absolute inset-0 translate-x-3 translate-y-3 border-2 border-brand-navy bg-brand-teal" />
+          
+          <div className="relative border-2 border-brand-navy bg-white p-6 sm:p-10 flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
+            
+            <div className="shrink-0 group">
+              <Image src="/full-icon.png" alt="Logo" width={260} height={260} className="h-28 sm:h-36 w-auto object-contain" priority />
+            </div>
+
+            <div className="flex-1 space-y-6 text-center lg:text-left">
+              <div className="border-y-2 border-brand-navy py-5 relative">
+                <div className="absolute left-0 top-0 w-2 h-full bg-brand-teal hidden lg:block" />
+                <p className="font-heading text-xl sm:text-2xl font-black text-brand-navy-deep uppercase tracking-widest leading-snug lg:pl-6">
+                  Nggak Usah <br className="hidden lg:block"/>Nebak-Nebak Lagi.
+                </p>
+                <p className="mt-3 text-sm sm:text-base font-semibold leading-relaxed text-slate-600 max-w-xl mx-auto lg:mx-0 lg:pl-6">
+                  Senjata rahasia buat ngakalin jatah cuti. Susun libur panjang impianmu dengan cerdas tanpa pusing melototin tanggal merah satu-satu.
+                </p>
+              </div>
+            </div>
+          </div>
         </footer>
       </div>
     </main>
@@ -358,16 +315,4 @@ function LegendDot({ className, label }: { className: string; label: string }) {
       {label}
     </span>
   );
-}
-
-function getHolidaySourceLabel(source: HolidaySource) {
-  if (source === "api") {
-    return "libur.deno.dev";
-  }
-
-  if (source === "mixed") {
-    return "libur.deno.dev + data lokal";
-  }
-
-  return "data lokal";
 }

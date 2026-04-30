@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import {
   eachDayOfInterval,
   endOfMonth,
@@ -25,18 +25,12 @@ import {
   Sparkles,
 } from "lucide-react";
 
-import { Holiday } from "@/data/holidays";
-import {
-  getLocalHolidays,
-  HolidaySource,
-  mergeHolidaySources,
-  normalizeApiHolidays,
-  type ApiHoliday,
-} from "@/lib/holidays";
+import { HolidaySource } from "@/lib/holidays";
 import {
   generateRecommendationResult,
   type RecommendationType,
 } from "@/lib/recommendations";
+import { useYearHolidays } from "@/lib/use-year-holidays";
 import { cn } from "@/lib/utils";
 import { Switch } from "@/components/ui/switch";
 
@@ -47,49 +41,11 @@ export default function Home() {
   const [year, setYear] = useState(2026);
   const [isSixDayWorkWeek, setIsSixDayWorkWeek] = useState(false);
   const [annualLeaveBudget, setAnnualLeaveBudget] = useState(12);
-  const [yearHolidays, setYearHolidays] = useState<Holiday[]>([]);
-  const [isLoadingHolidays, setIsLoadingHolidays] = useState(false);
-  const [holidaySource, setHolidaySource] = useState<HolidaySource>("api");
-
-  useEffect(() => {
-    const controller = new AbortController();
-
-    const fetchHolidays = async () => {
-      setIsLoadingHolidays(true);
-      try {
-        const response = await fetch(`https://libur.deno.dev/api?year=${year}`, {
-          signal: controller.signal,
-        });
-
-        if (!response.ok) {
-          throw new Error(`Holiday API returned ${response.status}`);
-        }
-
-        const data = (await response.json()) as ApiHoliday[];
-        const normalizedHolidays = normalizeApiHolidays(data);
-        const merged = mergeHolidaySources(normalizedHolidays, year);
-
-        setHolidaySource(merged.source);
-        setYearHolidays(merged.holidays);
-      } catch (error) {
-        if (controller.signal.aborted) {
-          return;
-        }
-
-        console.error("Failed to fetch holidays:", error);
-        setHolidaySource("local");
-        setYearHolidays(getLocalHolidays(year));
-      } finally {
-        if (!controller.signal.aborted) {
-          setIsLoadingHolidays(false);
-        }
-      }
-    };
-
-    fetchHolidays();
-
-    return () => controller.abort();
-  }, [year]);
+  const {
+    holidays: yearHolidays,
+    source: holidaySource,
+    isLoading: isLoadingHolidays,
+  } = useYearHolidays(year);
 
   const months = useMemo(() => {
     return Array.from({ length: 12 }, (_, index) => {

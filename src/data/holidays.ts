@@ -2,6 +2,7 @@ export interface Holiday {
   date: string; // YYYY-MM-DD format
   name: string;
   isCollectiveLeave: boolean;
+  source?: "api" | "official-snapshot";
 }
 
 export const holidays: Holiday[] = [
@@ -223,5 +224,157 @@ export const holidays: Holiday[] = [
     date: "2025-12-26",
     name: "Cuti Bersama Hari Raya Natal",
     isCollectiveLeave: true,
+  },
+
+  // 2026 Holidays (SKB 3 Menteri, announced 19 September 2025)
+  {
+    date: "2026-01-01",
+    name: "Tahun Baru 2026 Masehi",
+    isCollectiveLeave: false,
+    source: "official-snapshot",
+  },
+  {
+    date: "2026-01-16",
+    name: "Isra Mikraj Nabi Muhammad SAW",
+    isCollectiveLeave: false,
+    source: "official-snapshot",
+  },
+  {
+    date: "2026-02-16",
+    name: "Cuti Bersama Tahun Baru Imlek",
+    isCollectiveLeave: true,
+    source: "official-snapshot",
+  },
+  {
+    date: "2026-02-17",
+    name: "Tahun Baru Imlek 2577 Kongzili",
+    isCollectiveLeave: false,
+    source: "official-snapshot",
+  },
+  {
+    date: "2026-03-18",
+    name: "Cuti Bersama Hari Suci Nyepi",
+    isCollectiveLeave: true,
+    source: "official-snapshot",
+  },
+  {
+    date: "2026-03-19",
+    name: "Hari Suci Nyepi Tahun Baru Saka 1948",
+    isCollectiveLeave: false,
+    source: "official-snapshot",
+  },
+  {
+    date: "2026-03-20",
+    name: "Cuti Bersama Hari Raya Idul Fitri",
+    isCollectiveLeave: true,
+    source: "official-snapshot",
+  },
+  {
+    date: "2026-03-21",
+    name: "Hari Raya Idul Fitri 1447 Hijriah",
+    isCollectiveLeave: false,
+    source: "official-snapshot",
+  },
+  {
+    date: "2026-03-22",
+    name: "Hari Raya Idul Fitri 1447 Hijriah",
+    isCollectiveLeave: false,
+    source: "official-snapshot",
+  },
+  {
+    date: "2026-03-23",
+    name: "Cuti Bersama Hari Raya Idul Fitri",
+    isCollectiveLeave: true,
+    source: "official-snapshot",
+  },
+  {
+    date: "2026-03-24",
+    name: "Cuti Bersama Hari Raya Idul Fitri",
+    isCollectiveLeave: true,
+    source: "official-snapshot",
+  },
+  {
+    date: "2026-04-03",
+    name: "Wafat Yesus Kristus",
+    isCollectiveLeave: false,
+    source: "official-snapshot",
+  },
+  {
+    date: "2026-04-05",
+    name: "Hari Paskah",
+    isCollectiveLeave: false,
+    source: "official-snapshot",
+  },
+  {
+    date: "2026-05-01",
+    name: "Hari Buruh Internasional",
+    isCollectiveLeave: false,
+    source: "official-snapshot",
+  },
+  {
+    date: "2026-05-14",
+    name: "Kenaikan Yesus Kristus",
+    isCollectiveLeave: false,
+    source: "official-snapshot",
+  },
+  {
+    date: "2026-05-15",
+    name: "Cuti Bersama Kenaikan Yesus Kristus",
+    isCollectiveLeave: true,
+    source: "official-snapshot",
+  },
+  {
+    date: "2026-05-27",
+    name: "Hari Raya Idul Adha 1447 Hijriah",
+    isCollectiveLeave: false,
+    source: "official-snapshot",
+  },
+  {
+    date: "2026-05-28",
+    name: "Cuti Bersama Hari Raya Idul Adha",
+    isCollectiveLeave: true,
+    source: "official-snapshot",
+  },
+  {
+    date: "2026-05-31",
+    name: "Hari Raya Waisak 2570 BE",
+    isCollectiveLeave: false,
+    source: "official-snapshot",
+  },
+  {
+    date: "2026-06-01",
+    name: "Hari Lahir Pancasila",
+    isCollectiveLeave: false,
+    source: "official-snapshot",
+  },
+  {
+    date: "2026-06-16",
+    name: "Tahun Baru Islam 1448 Hijriah",
+    isCollectiveLeave: false,
+    source: "official-snapshot",
+  },
+  {
+    date: "2026-08-17",
+    name: "Hari Kemerdekaan Republik Indonesia",
+    isCollectiveLeave: false,
+    source: "official-snapshot",
+  },
+  {
+    date: "2026-08-25",
+    name: "Maulid Nabi Muhammad SAW",
+    isCollectiveLeave: false,
+    source: "official-snapshot",
+  },
+  {
+    date: "2026-12-24",
+    name: "Cuti Bersama Hari Raya Natal",
+    isCollectiveLeave: true,
+    source: "official-snapshot",
+  },
+  {
+    date: "2026-12-25",
+    name: "Hari Raya Natal",
+    isCollectiveLeave: false,
+    source: "official-snapshot",
   },
 ];

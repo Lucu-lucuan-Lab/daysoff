@@ -246,11 +246,11 @@ export default function Home() {
 
         <footer className="mt-6 mb-8 relative">
           <div className="absolute inset-0 translate-x-3 translate-y-3 border-2 border-brand-navy bg-brand-teal" />
-          
+
           <div className="relative border-2 border-brand-navy bg-white p-6 sm:p-10 flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
-            
+
             <div className="shrink-0 group">
-              <Image src="/full-icon.png" alt="Logo" width={260} height={260} className="h-28 sm:h-36 w-auto object-contain" priority />
+              <Image src="/text-logo.png" alt="Logo" width={260} height={260} className="h-28 sm:h-36 w-auto object-contain" priority />
             </div>
 
             <div className="flex-1 space-y-6 text-center lg:text-left">

@@ -1,50 +1,112 @@
-# Kalender Cuti Indonesia (daysoff)
 
-A Next.js web application designed to optimize annual leave planning for Indonesian workers. It calculates the most efficient use of PTO (Paid Time Off) by identifying bridge days (hari kejepit) and long weekends around national holidays and collective leave (cuti bersama).
+---
 
-## How It Works
+<img src="assets/dayoff-logo.avif" alt="DaysOff Logo" width="600">
 
-The core of the application is a recommendation engine (`src/lib/recommendations.ts`) that:
-1. Ingests official holiday data via `libur.deno.dev` (with local fallbacks up to 2026).
-2. Scans for "opportunities" (windows of time where taking 1-5 days of leave yields disproportionately long continuous breaks).
-3. Uses a dynamic programming approach to pack the highest-value opportunities into a user-defined annual leave budget without overlapping dates.
+## Kalender Cuti Indonesia (daysoff)
 
-## Tech Stack
+Cari libur panjang tanpa nebak-nebak. An intelligent annual leave optimizer designed specifically for the Indonesian
+work calendar.
 
-- **Framework**: Next.js 16 (App Router)
-- **UI**: React 19, Tailwind CSS 4, Radix UI Primitives, Lucide
-- **Date Math**: `date-fns`
-- **Testing**: Node.js native test runner (`node --test`)
+[![Next.js](https://img.shields.io/badge/Next.js-16-black?style=flat-square&logo=next.js)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-19-blue?style=flat-square&logo=react)](https://react.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-38B2AC?style=flat-square&logo=tailwind-css)](https://tailwindcss.com/)
 
-## Local Development
+**daysoff** helps Indonesian workers maximize their continuous time off by strategically identifying "bridge days" (
+*hari kejepit*) and long weekends. By analyzing national holidays and collective leave (*cuti bersama*), the application
+provides data-driven recommendations to make the most of your annual leave budget.
 
-Requires Node.js 20+.
+## Features
 
-```bash
-# Clone and install
-git clone https://github.com/your-org/daysoff.git
-cd daysoff
-npm install
+- **Dynamic Optimization**: Uses a dynamic programming algorithm to calculate the most efficient use of your leave
+  budget, maximizing consecutive days off without overlaps.
+- **Work Week Support**: Toggle between 5-day and 6-day work weeks to match your specific employment terms.
+- **Interactive Calendar**: A year-at-a-glance view that highlights holidays, collective leave, and recommended leave
+  days.
+- **Plan Comparison**: Compare different leave "opportunities" and see the total efficiency of your annual plan.
+- **Reliable Data**: Hybrid data strategy fetching from the [Indonesian Holiday API](https://libur.deno.dev/) with
+  robust local fallbacks for 2024–2026.
 
-# Start the dev server
-npm run dev
+## Getting Started
 
-# Run unit tests
-npm test
-```
+### Prerequisites
+
+- **Node.js**: 20.x or later
+- **npm**: 10.x or later
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/Lucu-lucuan-Lab/daysoff.git
+   cd daysoff
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+The application will be available at `http://localhost:3000`.
+
+## Usage
+
+1. **Select Year**: Navigate through different years to see upcoming holiday patterns.
+2. **Set Budget**: Adjust your annual leave budget (e.g., 12 days) to see how the optimizer allocates them.
+3. **Toggle Work Week**: Switch between 5-day and 6-day work week modes to see how it affects long weekend
+   opportunities.
+4. **Review Plans**: Click on recommended plans in the sidebar to highlight them on the main calendar.
 
 ## Project Structure
 
-- `/src/app` - Next.js App Router (pages and layouts).
-- `/src/app/_components` - Domain-specific UI components (e.g., calendar grids, plan cards).
-- `/src/lib` - Core business logic and data fetching hooks. We keep this pure and framework-agnostic where possible.
-- `/src/data` - Static JSON/TS fallbacks for holiday data (2024-2026).
+```text
+src/
+├── app/              # Next.js App Router (pages and layouts)
+│   └── _components/  # Page-specific React components
+├── components/       # Reusable UI primitives (Radix, Shadcn-like)
+├── data/             # Static holiday data for offline fallbacks
+└── lib/              # Core business logic (Optimization, Data Fetching)
+```
+
+## Development
+
+### Testing
+
+The project uses the native Node.js test runner for unit testing core logic.
+
+```bash
+npm test
+```
+
+### Linting
+
+```bash
+npm run lint
+```
+
+### Build
+
+Create a production-ready build:
+
+```bash
+npm run build
+```
 
 ## Contributing
 
-We welcome pull requests. When contributing:
+Contributions are welcome. Please ensure that your changes adhere to the following guidelines:
 
-- **Keep it focused**: One PR, one scope.
-- **Commit messages**: Use imperative mood (e.g., `fix: handle leap year calculation`, `feat: add 2027 holiday data`). Follow the existing commit style of the repository (`git log -n 5`).
-- **Code style**: Do not add inline or block comments. The code should explain itself through variable naming, module structure, and clear types.
-- **Testing**: If you touch `src/lib/recommendations.ts` or date math, add a corresponding test in `src/lib/*.test.ts`.
+- **Logic First**: Keep complex date logic in `src/lib` and ensure it is covered by unit tests.
+- **No Comments**: We prefer self-documenting code. Use clear naming and structure instead of comments.
+- **Commit Style**: Use the imperative mood (e.g., `fix:`, `feat:`, `refactor:`) and match the repository's existing
+  style.
+
+## License
+
+This project is private and for internal use within Lucu-lucuan Lab. Refer to the repository settings for licensing
+details.
